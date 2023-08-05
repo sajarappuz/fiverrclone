@@ -1,34 +1,74 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react'
+import "./app.scss"
 
-function App() {
-  const [count, setCount] = useState(0)
+import { createBrowserRouter, RouterProvider, Outlet  } from "react-router-dom"
+import Home from "./pages/home/Home"
+import Gig from "./pages/gig/Gig"
+import MyGigs from "./pages/myGigs/MyGigs"
+import Orders from "./pages/orders/Orders"
+import Gigs from "./pages/gigs/Gigs"
+import Messages from "./pages/messages/Messages"
+import Message from "./pages/message/Message"
+import Add from "./pages/add/Add"
+import Navbar from './components/navbar/Navbar'
+import Footer from "./components/footer/Footer"
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+const App = () => {
+  
+    const Layout = () =>{
+      return(
+        <div>
+        <Navbar/>
+        <Outlet/>
+        <Footer/>
+        </div>
+      )
+    }  
+
+     const router  = createBrowserRouter([
+      {
+         path:"/",
+         element:<Layout/>,
+         children:[
+          {
+            path:"/",
+            element:<Home/>
+          },
+          {
+            path:"/gigs",
+            element:<Gigs/>
+          },
+          {
+            path:"/gig/:id",
+            element:<Gig/>
+          },
+          {
+            path:"/orders",
+            element:<Orders/>
+          },
+          {
+            path:"/mygigs",
+            element:<MyGigs/>
+          },
+          {
+            path:"/add",
+            element:<Add/>
+          },
+          {
+            path:"/messages",
+            element:<Messages/>
+          },
+          {
+            path:"/message/:id",
+            element:<Message/>
+          },
+         ]
+      },
+     ]);
+  return (   
+        <div>
+          <RouterProvider router={router}/>
+        </div>
   )
 }
 
